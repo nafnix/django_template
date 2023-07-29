@@ -1,0 +1,4 @@
+.env
+
+# ruff
+.ruff_cache

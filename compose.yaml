@@ -1,0 +1,91 @@
+x-common: &common
+  env_file:
+    - .env
+  networks:
+    - default
+  restart: unless-stopped
+
+x-website-common: &website_common
+  volumes:
+    - ./website:/website
+
+networks:
+  default:
+
+services:
+  website:
+    <<: [*common, *website_common]
+    build:
+      context: website
+      dockerfile: Dockerfile
+      args:
+        - PYPI_MIRROR=https://mirrors.cloud.tencent.com/pypi/simple
+        - SOURCES_MIRROR=mirrors.cloud.tencent.com
+        - SECURITY_SOURCE_MIRROR=mirrors.cloud.tencent.com
+      # args:
+      #   - PYPI_MIRROR=https://mirrors.tencentyun.com/pypi/simple/
+      #   - SOURCES_MIRROR=mirrors.tencentyun.com
+      #   - SECURITY_SOURCE_MIRROR=mirrors.tencentyun.com
+    image: website
+    volumes:
+      - staticfiles-data:/var/www/static
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - 18000:80
+    command: ./scripts/start_prod_server.sh
+
+  proxy:
+    <<: [*common]
+    image: nginx:alpine-slim
+    volumes:
+      - type: volume
+        source: staticfiles-data
+        target: /usr/share/nginx/html/static
+        read_only: true
+        volume:
+          nocopy: true
+    depends_on:
+      - website
+    ports:
+      - 18001:80
+
+  celery-worker:
+    <<: [*common, *website_common]
+    image: website
+    depends_on:
+      - website
+    command: ./scripts/run_celery_worker.sh
+
+  celery-beat:
+    <<: [*common, *website_common]
+    image: website
+    depends_on:
+      - website
+    command: ./scripts/run_celery_beat.sh
+
+  pgadmin:
+    <<: [*common]
+    image: dpage/pgadmin4:latest
+    depends_on:
+      - postgres
+    ports:
+      - 17999:80
+
+  redis:
+    <<: [*common]
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+
+  postgres:
+    <<: [*common]
+    image: postgres:14-alpine
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+
+volumes:
+  staticfiles-data:
+  postgres-data:
+  redis-data:
