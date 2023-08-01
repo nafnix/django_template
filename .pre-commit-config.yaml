@@ -10,8 +10,8 @@ repos:
   - repo: https://github.com/scop/pre-commit-shfmt
     rev: ""
     hooks:
-      # - id: shfmt # native (requires/installs Go to build)
-      - id: shfmt-docker # Docker image (requires Docker to run)
+      - id: shfmt # native (requires/installs Go to build)
+      # - id: shfmt-docker # Docker image (requires Docker to run)
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: "" # Use the sha / tag you want to point at
