@@ -18,10 +18,10 @@ services:
     build:
       context: website
       dockerfile: Dockerfile
-      args:
-        - PYPI_MIRROR=https://mirrors.cloud.tencent.com/pypi/simple
-        - SOURCES_MIRROR=mirrors.cloud.tencent.com
-        - SECURITY_SOURCE_MIRROR=mirrors.cloud.tencent.com
+      # args:
+      #   - PYPI_MIRROR=https://mirrors.cloud.tencent.com/pypi/simple
+      #   - SOURCES_MIRROR=mirrors.cloud.tencent.com
+      #   - SECURITY_SOURCE_MIRROR=mirrors.cloud.tencent.com
       # args:
       #   - PYPI_MIRROR=https://mirrors.tencentyun.com/pypi/simple/
       #   - SOURCES_MIRROR=mirrors.tencentyun.com
