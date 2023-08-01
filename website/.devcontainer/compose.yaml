@@ -1,0 +1,31 @@
+x-website-net: &website_net
+  network_mode: service:website
+
+services:
+  website:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+
+  redis:
+    <<: [*website_net]
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+
+  postgres:
+    <<: [*website_net]
+    image: postgres:14-alpine
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgres-data:
+  redis-data:

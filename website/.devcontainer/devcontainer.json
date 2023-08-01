@@ -1,0 +1,42 @@
+{
+  "name": "Django & PostgreSQL & Redis",
+  "dockerComposeFile": "compose.yaml",
+  "service": "website",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "remoteUser": "vscode",
+  // 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
+  // "features": { "ghcr.io/devcontainers/features/docker-in-docker:2": {} },
+  // 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [
+    5432, 6379, 8000
+    // 7999,
+  ],
+  // 👇 Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "./.devcontainer/prestart.sh",
+  // "postCreateCommand": "pdm install -d -v",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "streetsidesoftware.code-spell-checker",
+        "ms-python.black-formatter",
+        "ms-python.mypy-type-checker",
+        "charliermarsh.ruff",
+
+        "njpwerner.autodocstring",
+        "batisteo.vscode-django",
+        "donjayamanne.python-environment-manager",
+        // "VisualStudioExptTeam.vscodeintellicode",
+        "redhat.vscode-yaml",
+        "esbenp.prettier-vscode",
+        "DavidAnson.vscode-markdownlint",
+        "oderwat.indent-rainbow",
+        "EditorConfig.EditorConfig",
+        "tamasfe.even-better-toml",
+        "donjayamanne.githistory"
+        // "christian-kohler.path-intellisense",
+        // "amazonwebservices.aws-toolkit-vscode",
+      ]
+    }
+  }
+}
