@@ -1,13 +1,13 @@
 x-common: &common
   env_file:
-    - .env
+    - .env.prod
   networks:
     - default
   restart: unless-stopped
 
 x-website-common: &website_common
   volumes:
-    - ./website:/website
+    - .:/website
 
 networks:
   default:
@@ -16,7 +16,7 @@ services:
   website:
     <<: [*common, *website_common]
     build:
-      context: website
+      context: .
       dockerfile: Dockerfile
       # args:
       #   - PYPI_MIRROR=https://mirrors.cloud.tencent.com/pypi/simple

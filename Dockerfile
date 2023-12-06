@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG PYTHON_VERSION=3.11
-FROM library/python:${PYTHON_VERSION}-slim-bookworm AS builder
+FROM library/python:${PYTHON_VERSION}-bookworm AS builder
 
 ARG PYPI_MIRROR=https://pypi.org/simple
 WORKDIR /tmp
@@ -11,7 +11,7 @@ RUN <<EOT
 EOT
 
 
-FROM library/python:${PYTHON_VERSION}-slim-bookworm
+FROM library/python:${PYTHON_VERSION}-bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -44,9 +44,11 @@ RUN <<EOT
     useradd -m -d ${DJANGO_BASE_DIR} -s /bin/bash ${USER}
     mkdir -p ${DJANGO_STATIC_ROOT} ${DJANGO_BASE_DIR}
     chown -R ${USER}:${USER} ${DJANGO_BASE_DIR} ${DJANGO_STATIC_ROOT}
-    chmod +x ${DJANGO_BASE_DIR}/scripts/*
 EOT
 
 
 USER ${USER}
 WORKDIR ${DJANGO_BASE_DIR}
+RUN <<EOT
+    chmod +x ${DJANGO_BASE_DIR}/scripts/*
+EOT

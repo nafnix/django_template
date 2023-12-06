@@ -1,7 +1,7 @@
 from ._base import django_settings
 
 
-CELERY_BROKER_URL = django_settings.REDIS_URL
+CELERY_BROKER_URL = str(django_settings.REDIS_URL)
 
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"

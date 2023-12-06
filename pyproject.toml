@@ -1,0 +1,59 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [{ name = "Nafnix", email = "nafnix@proton.me" }]
+dependencies = [
+    "django>=4.2",
+    "psycopg2>=2.9.6",
+    "celery[redis]>=5.3.1",
+    "django-celery-beat>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "loguru>=0.7.2",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "MIT" }
+
+[tool.pdm.dev-dependencies]
+lint = []
+dev = [
+    "django-debug-toolbar>=4.1.0",
+    "pre-commit>=3.3.3",
+    "ruff>=0.1.7",
+]
+
+
+[tool.ruff]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # isort
+    "I",
+    # pep8-naming
+    "N",
+    # flake8-simplify
+    "SIM",
+    # flake8-import-conventions: {name} should be imported as {asname}
+    "ICN001",
+    "ISC003",
+]
+ignore = ["E111", "E114", "E117"]
+line-length = 100
+
+[tool.ruff.format]
+quote-style = "single"
+skip-magic-trailing-comma = false
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401", "F403", "F405"]
+
+[tool.ruff.isort]
+lines-after-imports = 2
+
+[tool.ruff.lint.flake8-import-conventions.aliases]
+sqlalchemy = "sa"
+[tool.ruff.lint.flake8-implicit-str-concat]
+allow-multiline = false

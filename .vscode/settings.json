@@ -1,0 +1,33 @@
+{
+  "files.exclude": {
+    ".venv": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    ".pdm-python": true
+    // "htmlcov": true,
+    // ".coverage": true
+  },
+  "files.autoSave": "onFocusChange",
+  "editor.unicodeHighlight.allowedLocales": { "zh-hans": true },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  "python.analysis.fixAll": ["source.convertImportFormat", "source.unusedImports"],
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.importFormat": "absolute",
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  // "python.analysis.diagnosticSeverityOverrides": {
+  //   "reportGeneralTypeIssues": "none"
+  // },
+
+  "autoDocstring.docstringFormat": "sphinx-notypes"
+}
