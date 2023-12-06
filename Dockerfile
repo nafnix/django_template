@@ -4,9 +4,10 @@ FROM library/python:${PYTHON_VERSION}-bookworm AS builder
 
 ARG PYPI_MIRROR=https://pypi.org/simple
 WORKDIR /tmp
-COPY ./pyproject.toml ./pdm.lock ./
+COPY ./pyproject.toml ./
 RUN <<EOT
     pip install pdm --upgrade --no-cache-dir -i ${PYPI_MIRROR}
+    pdm lock -v
     pdm export --without-hashes -o ./requirements.txt --prod -v
 EOT
 

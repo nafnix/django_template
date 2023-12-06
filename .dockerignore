@@ -112,7 +112,8 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+.env*
+!.env*.example
 .venv
 env/
 venv/
@@ -151,13 +152,17 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-
 # pdm
 #   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-# pdm.lock
+pdm.lock
 #   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
 #   in version control.
 #   https://pdm.fming.dev/#use-with-ide
 .pdm.toml
 .pdm-python
 .pdm-build/
+
+# ruff
+.ruff_cache
+
+website.conf

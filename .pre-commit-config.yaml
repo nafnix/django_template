@@ -17,6 +17,7 @@ repos:
     rev: "" # Use the sha / tag you want to point at
     hooks:
       - id: prettier
+        entry: prettier --write --ignore-unknown
         types_or: [json, yaml, markdown]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
