@@ -18,6 +18,12 @@ pip install pdm
 pdm install -dv
 ```
 
+安装预提交挂钩:
+
+```bash
+pdm run pre-commit install --install-hooks
+```
+
 使用安装了依赖的环境:
 
 ```bash
