@@ -32,6 +32,12 @@ cp .env.dev.example .env.dev
 python manage.py migrate
 ```
 
+运行开发服务器:
+
+```bash
+
+```
+
 ## 部署示例
 
 ### 本地部署
@@ -51,5 +57,4 @@ docker compose up
 **建议** 修改的环境变量名称如下:
 
 -   `PGADMIN_DEFAULT_EMAIL`: Pgadmin 的默认用户邮箱
--   `POSTGRES_PASSWORD`: 数据库密码
 -   `DJANGO_ALLOWED_HOSTS`: 允许的主机名
