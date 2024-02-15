@@ -1,6 +1,6 @@
 # Django 项目开发模板
 
-这是一份基于 Django 4.2 版本的项目开发模板，此模板依赖 [PDM](https://pdm-project.org/)、[Redis](https://redis.io/) 与 [Postgres](https://www.postgresql.org/)，但带有的 devcontainer 中已经配置好了它们，你可以快速地在本地创建一个基于此模板的项目开发容器。
+这是一份基于 Django 4.2 版本的项目开发模板，此模板依赖 [PDM](https://pdm-project.org/)、[Redis](https://redis.io/) 与 [Postgres](https://www.postgresql.org/)，带有的 devcontainer 配置中已经配置好了它们，你可以快速地在本地创建一个基于此模板的项目开发容器。
 
 ## 开发示例
 
@@ -15,7 +15,13 @@ pip install pdm
 安装依赖:
 
 ```bash
-pdm install
+pdm install -dv
+```
+
+使用安装了依赖的环境:
+
+```bash
+pdm use -f .venv
 ```
 
 创建环境变量文件:
@@ -35,26 +41,28 @@ python manage.py migrate
 运行开发服务器:
 
 ```bash
-
+python manage.py runserver
 ```
 
 ## 部署示例
 
 ### 本地部署
 
+创建生产环境使用的环境变量文件，可以从示例的环境变量文件中创建:
+
 ```bash
 cp .env.prod.example .env.prod
-docker compose up
 ```
 
-### 公网服务器上部署
-
-若要在公网服务器上部署，注意要在 .env.prod 环境变量配置文件中修改相应的环境变量值，**必须** 修改的环境变量名称如下：
+若要在公网服务器上部署，注意要在 `.env.prod` 环境变量文件中修改相应的值，修改的环境变量名称如下：
 
 -   `DJANGO_SECRET_KEY`: Django 安全密钥
 -   `DJANGO_STATIC_URL`: 静态文件地址
-
-**建议** 修改的环境变量名称如下:
-
 -   `PGADMIN_DEFAULT_EMAIL`: Pgadmin 的默认用户邮箱
 -   `DJANGO_ALLOWED_HOSTS`: 允许的主机名
+
+创建完成后启动:
+
+```bash
+docker compose up -d
+```
