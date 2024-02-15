@@ -54,12 +54,11 @@ python manage.py runserver
 cp .env.prod.example .env.prod
 ```
 
-若要在公网服务器上部署，注意要在 `.env.prod` 环境变量文件中修改相应的值，修改的环境变量名称如下：
+若要在公网服务器上部署，注意要在 `.env.prod` 环境变量文件中修改相应的值，至少应该修改如下三项环境变量的值：
 
 -   `DJANGO_SECRET_KEY`: Django 安全密钥
 -   `DJANGO_STATIC_URL`: 静态文件地址
 -   `PGADMIN_DEFAULT_EMAIL`: Pgadmin 的默认用户邮箱
--   `DJANGO_ALLOWED_HOSTS`: 允许的主机名
 
 创建完成后启动:
 
