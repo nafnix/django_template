@@ -5,7 +5,7 @@ description = ""
 authors = [{ name = "Nafnix", email = "nafnix@proton.me" }]
 dependencies = [
     "django>=4.2",
-    "psycopg2>=2.9.6",
+    "psycopg2>=2.9.9",
     "celery[redis]>=5.3.1",
     "django-celery-beat>=2.5.0",
     "pydantic-settings>=2.1.0",
@@ -19,8 +19,8 @@ license = { text = "MIT" }
 [tool.pdm.dev-dependencies]
 lint = []
 dev = [
-    "pre-commit>=3.3.3",
-    "ruff>=0.1.7",
+    "pre-commit>=3.6.1",
+    "ruff>=0.2.1",
 ]
 
 
@@ -41,7 +41,7 @@ select = [
     "ISC003",
 ]
 ignore = ["E111", "E114", "E117"]
-line-length = 100
+line-length = 120
 
 [tool.ruff.format]
 quote-style = "single"
@@ -53,7 +53,5 @@ skip-magic-trailing-comma = false
 [tool.ruff.isort]
 lines-after-imports = 2
 
-[tool.ruff.lint.flake8-import-conventions.aliases]
-sqlalchemy = "sa"
 [tool.ruff.lint.flake8-implicit-str-concat]
 allow-multiline = false

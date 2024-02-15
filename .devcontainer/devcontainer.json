@@ -12,7 +12,7 @@
   "forwardPorts": [5432, 6379, 8000],
 
   // 👇 Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "./.devcontainer/prestart.sh",
+  "postCreateCommand": "pdm install -dv && pdm run pre-commit install --install-hooks",
 
   "customizations": {
     "vscode": {

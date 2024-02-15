@@ -7,11 +7,6 @@ ARG SECURITY_SOURCES_MIRROR=deb.debian.org
 RUN <<EOT
     sed -i "s/deb.debian.org\/debian$/${SOURCES_MIRROR}\/debian/g" /etc/apt/sources.list.d/debian.sources
     sed -i "s/deb.debian.org\/debian-security$/${SECURITY_SOURCES_MIRROR}\/debian-security/g" /etc/apt/sources.list.d/debian.sources
-    apt update
-    apt install -y --no-install-recommends sudo git libpq-dev gcc
-    apt autoremove -y
-    apt clean
-    rm -rf /var/lib/apt/lists/*
 EOT
 
 
@@ -26,8 +21,6 @@ ARG USER=vscode
 ARG DEFAULT_SHELL=/bin/zsh
 RUN <<EOT
     usermod -s ${DEFAULT_SHELL} ${USER}
-    echo "${USER} ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/${USER}
-    chmod 0440 /etc/sudoers.d/${USER}
 EOT
 
 

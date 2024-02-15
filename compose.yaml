@@ -6,28 +6,50 @@ x-common: &common
 services:
   website:
     <<: [*common]
+    container_name: django-template-website
     build:
       context: .
       dockerfile: Dockerfile
       # args:
-      #   - PYPI_MIRROR=https://mirrors.cloud.tencent.com/pypi/simple
       #   - SOURCES_MIRROR=mirrors.cloud.tencent.com
       #   - SECURITY_SOURCE_MIRROR=mirrors.cloud.tencent.com
-      # args:
-      #   - PYPI_MIRROR=https://mirrors.tencentyun.com/pypi/simple/
-      #   - SOURCES_MIRROR=mirrors.tencentyun.com
-      #   - SECURITY_SOURCE_MIRROR=mirrors.tencentyun.com
+      #   - PYPI_MIRROR=https://mirrors.cloud.tencent.com/pypi/simple
     image: website
     volumes:
       - staticfiles-data:/var/www/static
       - .:/website
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - internal
     command: ./scripts/start_prod_server.sh
+
+  # celery-worker:
+  #   <<: [*common]
+  #   container_name: django-template-celery-worker
+  #   image: website
+  #   volumes:
+  #     - .:/website
+  #   depends_on:
+  #     - website
+  #   command: ./scripts/run_celery_worker.sh
+
+  # celery-beat:
+  #   <<: [*common]
+  #   container_name: django-template-celery-beat
+  #   image: website
+  #   volumes:
+  #     - .:/website
+  #   depends_on:
+  #     - website
+  #   command: ./scripts/run_celery_beat.sh
 
   proxy:
     <<: [*common]
+    container_name: django-template-proxy
     image: nginx:alpine-slim
     volumes:
       - type: volume
@@ -37,53 +59,57 @@ services:
         volume:
           nocopy: true
       - type: bind
-        source: website.conf
-        target: /etc/nginx/conf.d/website.conf
+        source: nginx.conf
+        target: /etc/nginx/conf.d/django.conf
     depends_on:
       - website
+    networks:
+      - internal
+      - cloudflare-tunnel
 
-  celery-worker:
-    <<: [*common]
-    image: website
-    volumes:
-      - .:/website
-    depends_on:
-      - website
-    command: ./scripts/run_celery_worker.sh
-
-  celery-beat:
-    <<: [*common]
-    image: website
-    volumes:
-      - .:/website
-    depends_on:
-      - website
-    command: ./scripts/run_celery_beat.sh
-
-  pgadmin:
-    <<: [*common]
-    image: dpage/pgadmin4:latest
-    depends_on:
-      - postgres
+  # pgadmin:
+  #   <<: [*common]
+  #   container_name: django-template-pgadmin
+  #   image: dpage/pgadmin4:latest
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - internal
+  #     - cloudflare-tunnel
 
   redis:
     <<: [*common]
+    container_name: django-template-redis
     image: redis:alpine
+    healthcheck:
+      test: "redis-cli ping"
+      interval: 5s
+      retries: 20
     volumes:
       - redis-data:/data
+    networks:
+      - internal
 
   postgres:
     <<: [*common]
+    container_name: django-template-postgres
     image: postgres:14-alpine
+    healthcheck:
+      test: "pg_isready -U postgres"
+      interval: 5s
+      retries: 20
     volumes:
       - postgres-data:/var/lib/postgresql/data/
-
-  cloudflare-tunnel:
-    <<: *common
-    image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run --token <token>
+    networks:
+      - internal
 
 volumes:
   staticfiles-data:
   postgres-data:
   redis-data:
+
+networks:
+  internal:
+    internal: true
+  cloudflare-tunnel:
+    external: true
