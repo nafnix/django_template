@@ -4,12 +4,12 @@ version = ""
 description = ""
 authors = [{ name = "Nafnix", email = "nafnix@proton.me" }]
 dependencies = [
-    "django>=4.2",
+    "django>=5.0.3",
     "psycopg2>=2.9.9",
     "celery[redis]>=5.3.1",
-    "django-celery-beat>=2.5.0",
-    "pydantic-settings>=2.1.0",
-    "django-debug-toolbar>=4.1.0",
+    "django-celery-beat>=2.6.0",
+    "pydantic-settings>=2.2.1",
+    "django-debug-toolbar>=4.3.0",
     "loguru>=0.7.2",
 ]
 requires-python = ">=3.11"
@@ -20,7 +20,7 @@ license = { text = "MIT" }
 lint = []
 dev = [
     "pre-commit>=3.6.1",
-    "ruff>=0.2.1",
+    "ruff>=0.3.3",
 ]
 
 
